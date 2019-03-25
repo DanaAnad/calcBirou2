@@ -1,0 +1,170 @@
+<!doctype html>
+<html>
+	<head>
+    	<link rel="stylesheet" type="text/css" href="style.css">
+    	<script type="text/javascript">
+
+			var result = 0;
+			var nextOp = null;
+			var opButtonPressed = false;
+			var oldResult = 0;
+
+			function calculate(lastTypedValue) {
+//				debugger;
+				console.log('###### calculating ######');
+				console.log('nextOP:', nextOp, ' lastTypedValue: ', lastTypedValue);
+				if (nextOp === null){
+					result = parseFloat(lastTypedValue);
+				}
+				else {
+					oldResult = result; //?
+					switch(nextOp){
+						case '+':
+							result += parseFloat(lastTypedValue);
+							break;
+						case "-":
+							result -= parseFloat(lastTypedValue);
+							break;
+						case '*':
+							result *= parseFloat(lastTypedValue);
+							break;
+						case "/":
+							result /= parseFloat(lastTypedValue);
+							break;
+
+					}
+				}
+
+				console.log('result: ', result, 'oldResult: ', oldResult);
+				document.getElementById("result").value = result;
+			}
+
+			function typeOperation(op){
+				console.log('###### typing op ######');
+				console.log('op: ', op);
+				var lastTypedValue = document.getElementById("result").value;
+				console.log('lastTypedValue: ', lastTypedValue);
+				calculate(lastTypedValue);
+
+				nextOp = op;
+				opButtonPressed = true;
+			};
+
+    		function typeNumber(no){
+				console.log('###### typing number ######');
+				if (isNumeric(no)){
+					console.log('no: ',no);
+
+					var currentTypedValue = document.getElementById("result").value;
+					if (currentTypedValue === 0 || opButtonPressed){
+						opButtonPressed = false;
+						document.getElementById("result").value = no;
+					}
+					else {
+						console.log('currentTypedValue: ', currentTypedValue);
+						currentTypedValue = currentTypedValue.toString();
+						currentTypedValue  += no.toString();
+						currentTypedValue = parseFloat(currentTypedValue);
+						document.getElementById("result").value = currentTypedValue;
+					}
+
+				}
+
+
+
+    		};
+			let powerStatus = 'off';
+			function On(event){
+				powerStatus = "on";
+				let display = 0;
+				document.getElementById('result').value = display 
+				console.log('### calc pornit###', 'display On: ', display);
+			};
+			function Off(event){
+				powerStatus = 'off';
+				let displayOff = null;
+				document.getElementById('result').value = displayOff;
+				console.log('### clac oprit###',
+				 'display Off: ', displayOff);
+			};
+			function onOff(event){
+				if( powerStatus === 'off'){
+					On();
+				} else {
+					Off();
+				}
+			};
+
+			function reset(){
+				result = 0
+				oldResult = 0
+				nextOp = null;
+				console.log("### butonul AC reseteaza tot###");
+				document.getElementById('result').value = 0;
+				console.log(result);
+				console.log(oldResult);
+			};
+
+			function Cancel(){
+				let a = document.getElementById('result').value;
+				console.log('### C sterge ultima cifra ###');
+				console.log(a);
+				document.getElementById('result').value = a.substr(0, a.length-1);
+			};
+			
+			function isNumeric(n){
+				return !isNaN(parseFloat(n)) && isFinite(n);
+			};
+
+    	</script>
+	</head>
+
+	<body>
+		<div class="calcContainer">
+			<div class="row">
+				<div class="resultConainer">
+					<input type="number" value=0 id="result" disabled/>
+				</div>
+			</div>
+			<div class="row">
+				<button id="onoff" onClick = "onOff(event)">on / off</button>
+			</div>
+			<div class="row">
+				<div class="cols">
+					<button class="numericButton" onClick="typeNumber(9);">9</button>
+					<button class="numericButton" onClick="typeNumber(8);">8</button>
+					<button class="numericButton" onClick="typeNumber(7);">7</button>
+					<button class="numericButton" onClick="typeNumber(6);">6</button>
+					<button class="numericButton" onClick="typeNumber(5);">5</button>
+					<button class="numericButton" onClick="typeNumber(4);">4</button>
+					<button class="numericButton" onClick="typeNumber(3);">3</button>
+					<button class="numericButton" onClick="typeNumber(2);">2</button>
+					<button class="numericButton" onClick="typeNumber(1);">1</button>
+					<button class="numericButton" onClick="typeNumber(0);">0</button>
+					<button class="dotButton" conClick = "typeComa(',');">,</button>
+				</div>
+				<!-- <div style="clear:both;"></div> -->
+				<div class="cols">
+					<div class="operationsContainer">
+						<button class="operationButton" onClick="typeOperation('/')">/</button>
+						<button class="operationButton" onClick="typeOperation('*')">*</button>
+						<button class="operationButton" onClick="typeOperation('+')">+</button>
+						<button class="operationButton" onClick="typeOperation('-')">-</button>
+					</div>
+					<!-- <div style="clear:both;"></div> -->
+					<div class="operationsContainer">
+						<div class="resetButtonsContainer">
+							<button class="clearButton" onClick = 'Cancel(event)'>C</button>
+							<button class="resetButton" onClick = 'reset(event)'>AC</button>
+						</div>
+						<!-- <div style="clear:both;"></div> -->
+						<div class="goButtonCotnainer">
+							<button class="resultButton" onClick ='egal(event)'>=</button>						
+						</div>
+						
+					</div>
+				</div>				
+			</div>
+		</div>
+	</body>
+</html>
