@@ -69,26 +69,31 @@
 					}
 
 				}
-
-
-
     		};
-			let powerStatus = 'off';
+
+			function typeComa(x){
+				document.getElementById('result').value+=x;
+				console.log(x);
+			};
+			let powerStatus = "off";
 			function On(event){
 				powerStatus = "on";
 				let display = 0;
-				document.getElementById('result').value = display 
+				document.getElementById('result').value = display; 
 				console.log('### calc pornit###', 'display On: ', display);
 			};
 			function Off(event){
-				powerStatus = 'off';
+				result = 0
+				oldResult = 0
+				nextOp = null;
+				powerStatus = "off";
 				let displayOff = null;
 				document.getElementById('result').value = displayOff;
-				console.log('### clac oprit###',
+				console.log('### calc oprit###',
 				 'display Off: ', displayOff);
 			};
 			function onOff(event){
-				if( powerStatus === 'off'){
+				if( powerStatus === "off"){
 					On();
 				} else {
 					Off();
@@ -99,7 +104,7 @@
 				result = 0
 				oldResult = 0
 				nextOp = null;
-				console.log("### butonul AC reseteaza tot###");
+				console.log("### resetting all operations ###");
 				document.getElementById('result').value = 0;
 				console.log(result);
 				console.log(oldResult);
@@ -107,8 +112,8 @@
 
 			function Cancel(){
 				let a = document.getElementById('result').value;
-				console.log('### C sterge ultima cifra ###');
-				console.log(a);
+				console.log('### deleting last number ###');
+				console.log('### last nr deleted: ', a.substr(a.length-1));
 				document.getElementById('result').value = a.substr(0, a.length-1);
 			};
 			
@@ -123,7 +128,7 @@
 		<div class="calcContainer">
 			<div class="row">
 				<div class="resultConainer">
-					<input type="number" value=0 id="result" disabled/>
+					<input type="text" value='' id="result" disabled/>
 				</div>
 			</div>
 			<div class="row">
@@ -141,7 +146,7 @@
 					<button class="numericButton" onClick="typeNumber(2);">2</button>
 					<button class="numericButton" onClick="typeNumber(1);">1</button>
 					<button class="numericButton" onClick="typeNumber(0);">0</button>
-					<button class="dotButton" conClick = "typeComa(',');">,</button>
+					<button class="dotButton" onClick = "typeComa(',');">,</button>
 				</div>
 				<!-- <div style="clear:both;"></div> -->
 				<div class="cols">
